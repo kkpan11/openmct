@@ -150,13 +150,13 @@ export default class TableRowCollection extends EventEmitter {
   }
 
   insertOrUpdateRows(rowsToAdd, addToBeginning) {
-    rowsToAdd.forEach((row) => {
+    rowsToAdd.forEach((row, addRowsIndex) => {
       const index = this.getInPlaceUpdateIndex(row);
       if (index > -1) {
         this.updateRowInPlace(row, index);
       } else {
         if (addToBeginning) {
-          this.rows.unshift(row);
+          this.rows.splice(addRowsIndex, 0, row);
         } else {
           this.rows.push(row);
         }
@@ -273,7 +273,7 @@ export default class TableRowCollection extends EventEmitter {
    */
   sortBy(sortOptions) {
     if (arguments.length > 0) {
-      this.sortOptions = sortOptions;
+      this.setSortOptions(sortOptions);
       this.rows = _.orderBy(
         this.rows,
         (row) => row.getParsedValue(sortOptions.key),
@@ -284,6 +284,10 @@ export default class TableRowCollection extends EventEmitter {
 
     // Return duplicate to avoid direct modification of underlying object
     return Object.assign({}, this.sortOptions);
+  }
+
+  setSortOptions(sortOptions) {
+    this.sortOptions = sortOptions;
   }
 
   setColumnFilter(columnKey, filter) {
