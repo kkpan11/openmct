@@ -1,6 +1,6 @@
 {
   "name": "openmct",
-  "version": "4.1.54-nightly-20241126",
+  "version": "4.1.55-nightly-20241127",
   "description": "The Open MCT core platform",
   "module": "dist/openmct.js",
   "main": "dist/openmct.js",
